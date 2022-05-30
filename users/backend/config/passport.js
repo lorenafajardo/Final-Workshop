@@ -1,27 +1,35 @@
+/**
+ * Descripcion: passport.js, esta clase contiene las funciones que permite realizar validacioes de email
+ *             y contaseña enn el ingreso y registro de usuarios
+ * Author: Lorena Fajardo Díaz
+ * Version: 1.0.0
+ */
+
+
+// Constructor utilizado para la validacion de usuario y contraseña
 const LocalStrategy = require('passport-local').Strategy;
 
+// Importacion del modelo user
 const User = require('../models/user');
 
 module.exports = function (passport) {
-  // required for persistent login sessions
-  // passport needs ability to serialize and unserialize users out of session
+  
+  //serialize y deserialize user so usados para la autenticacion del usuario
   passport.serializeUser(function (user, done) {
     done(null, user.id);
   });
 
-  // used to deserialize user
   passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
       done(err, user);
     });
   });
 
-  // Signup
+  // validaciones para el registro de usuarios
   passport.use('local-signup', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with email
     usernameField: 'email',
     passwordField: 'password',
-    passReqToCallback : true // allows us to pass back the entire request to the callback
+    passReqToCallback : true 
   },
   function (req, email, password, done) {
     User.findOne({'email': email}, function (err, user) {
@@ -29,7 +37,7 @@ module.exports = function (passport) {
         return done(err);
       }
       if (user) {
-        return done(null, false, req.flash('signupMessage', 'the email is already taken'));
+        return done(null, false, req.flash('signupMessage', 'El correo ya existe'));
       } else {
         var newUser = new User();
         newUser.email = email;
@@ -42,9 +50,7 @@ module.exports = function (passport) {
     });
   }));
 
-  // login
-  // we are using named strategies since we have one for login and one for signup
-  // by default, if there was no name, it would just be called 'local
+   // validaciones para el ingreso de usuarios
   passport.use('local-login', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
