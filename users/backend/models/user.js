@@ -1,11 +1,11 @@
 /**
- * Descripcion: la clase gamer.js, contiene el modelo utilizado para almacenar
- *              los jugadores. 
+ * Descripcion: user.js, esta clase contiene las funciones que permite realizar validacioes de email
+ *             y contaseña enn el ingreso y registro de usuarios
  * Author: Lorena Fajardo Díaz
- * Version: 2.0.0
+ * Version: 1.0.0
  */
 
-/** Importacion del esquema y modelo de moongose */
+// Importacion de mogoose y bcrypt 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 
@@ -14,15 +14,15 @@ const userSchema = new mongoose.Schema({
   password: {type: String}
 });
 
-// generating a hash
+// Se ecripta la contraseña
 userSchema.methods.generateHash = function (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-// checking if password is valid
+// Comprueba si la contraseña es valida
 userSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-// create the model for user and expose it to our app
+// Exporta el esquema del modelo de user
 module.exports = mongoose.model('User', userSchema);
