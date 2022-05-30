@@ -1,3 +1,10 @@
+/**
+ * Descripcion: index.js contiene todas las configuraciones necesarias para el funcionamiento de la aplicacion
+ * Author: Lorena Fajardo Díaz
+ * Version: 1.0.0
+ */
+
+//Importacion de librerias
 const express = require('express');
 const app = express();
 
@@ -11,14 +18,15 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const { url } = require('./backend/config/database');
-
 const { engine } = require("express-handlebars");
 
+//Coexion a base de datos
 mongoose.connect(url).then(()=> console.log('conectados con mongoDBAtlas'));
 
+//importacion de la clase passport
 require('./backend/config/passport')(passport);
 
-// settings
+// configuraciones
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', engine({
@@ -34,7 +42,7 @@ app.set("view engine", ".hbs");
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
-// required for passport
+
 
 app.use(session({
 	secret: 'finalworkshop',
@@ -45,19 +53,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// routes
+// Ruta donde se encuentra passport
 require('./backend/controller/user.controller')(app, passport);
 
-//app.use('/',require('./backend/routes/user.routes'));
-//app.use('/login',require('./backend/routes/user.routes'));
-//app.use('/signup',require('./backend/routes/user.routes'));
-//app.use('/room',require('./backend/routes/user.routes'));
-
-
-
-// static files
 app.use(express.static(path.join(__dirname, 'public')));
-// start the server
+
+// Inicializacion del servidor
 app.listen(app.get('port'), () => {
 	console.log('server on port ', app.get('port'));
 });
