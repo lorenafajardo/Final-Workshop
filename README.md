@@ -9,7 +9,7 @@ Juego Bingo que contiene las opciones de registro e ingreso mediante validación
 
 - En cuanto a la parte de backend realizada en spring boot, es necesario considerar que la base de datos uilizada fue MySQL y se diseñó en la aplicación MySQL Workbench, por ello antes de ejecutar el proyecto es necesario ejecutar el script adjuntado en el repositorio con el nombre "bingo_db.sql". las tablas se crearan automaicamente con la ejeución del proyecto.
 
--Para la conexión con la base de datos, se configuró el archivo applications.properties que se encuentra ubicado en la siguiente ruta: https://github.com/lorenafajardo/Final-Workshop/blob/main/backend/usersBingo/src/main/resources/application.properties asignandole el username: root y password: 12345. Sin embargo, este se debe configurar acorde a las condiciones del MySQL Workbench.
+- Para la conexión con la base de datos, se configuró el archivo applications.properties que se encuentra ubicado en la siguiente ruta: https://github.com/lorenafajardo/Final-Workshop/blob/main/backend/usersBingo/src/main/resources/application.properties asignandole el username: root y password: 12345. Sin embargo, este se debe configurar acorde a las condiciones del MySQL Workbench.
 
 ## Despliegue
 
@@ -40,6 +40,6 @@ En cuanto a la parte de backend realizada en SpringBoot, se hizo el consumo de A
 
 No se cumplierón con todos los objeivos planteados en el taller por cuestiones de tiempo. Aún es necesario implementar el temporizador y realizar la version multijugador en el proyecto. Adicionalmente, la parte de frontend tambien será modificada, ya que en esta ocasión se recurrió a una opción mas sencilla para agilizar el proceso.  
 
-                                                                                                                                   ### Elaborado por:
-                                                                                                                                         Lorena Fajardo Díaz
+### Elaborado por:
+    Lorena Fajardo Díaz
 
