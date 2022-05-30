@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>start</title>
+    <style type="text/css">
+    body { margin: 0; width: 1000px; background-repeat: no-repeat; align-items: center;}
+    main { display: block;}
+    p{ font-size: 12px;}
+    table, td {border: 4px solid gray; border-collapse : collapse}
+    </style>
+		<!-- Bootstrap CSS -->
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<!-- jQuery, Popper.js, Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</head>
+	<body class="fondo-blur">
+		
+		<div class="container">
+			<table class="table table-bordered">
+        <tbody>
+    <tr>
+      <td>
+         <div id="instrucciones" style="background-color:gainsboro;">
+          <p><h2>BIENVENIDO AL JUEGO EL GRAN BUDA</h2></p>
+          <br>
+          <p><h5>A continuacion encontraras una tabla de bingo y en la parte inferior 
+            la opcion para sacar la balota que te indicara el numero y letra a jugar. La opcion 
+            para ganar es haber completado una linea horizontal</h5></p>
+            <p><h3>¡Suerte!</h3></p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div><h4> &nbsp;&nbsp;B &nbsp;&nbsp;&nbsp; I  &nbsp;&nbsp;&nbsp;   N  &nbsp;&nbsp;&nbsp;   G  &nbsp;&nbsp;&nbsp;    O </h4></div>
+        <div id="carton" class="align-middle" style="background-color:lightblue">
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div id="elementos" >
+          <button onclick="next()" class="btn btn-success">sacar nº</button>
+          <span id="MostrarNumeros" style="background-color:lightblue;width: 500px"></span>
+          <span id="MostrarLetras" style="background-color:lightblue;width: 500px"></span>
+        </div>  
+      </td>
+    </tr>
+  </tbody>
+  </table>
+		</div>
+		<script>
+      function tableCreate(filas, columnas) {
+        var carton = document.getElementById('carton');
+        var values = valuesGenerate(1, 99);
+        var tabla = tableComplete(values, filas, columnas);
+        template(tabla, carton, filas, columnas);
+        //generarArray();
+        }
+      
+      function template(tabla, carton, filas, columnas) {
+        var tablaHtml = '<table>';
+          
+          for (var i = 0; i < filas; i++) {
+            tablaHtml += '<tr>';
+              for (var j = 0; j < columnas; j++) {
+                var id = 'fila' + i + 'col' + j;
+                tabla[i][j] == 0 ? tablaHtml += '<td style="background: black;">' : tablaHtml += '<td class="active" id="' + id + '" style="cursor: pointer;">';
+                tablaHtml += tabla[i][j];
+                tabla[i][j] == 0 ? tablaHtml += '</td>' : tablaHtml += '</td>';
+                }
+                tablaHtml += '</tr>';
+                }
+        tablaHtml += '</table>';
+       carton.innerHTML = tablaHtml;
+      }
+
+      function tableComplete(values, filas, columnas) {
+        var tabla = [];
+        for (var i = 0; i < filas; i ++) {
+          var fila = [];
+          for (var j = 0; j < columnas; j++) {
+            var value = 0;
+            [value, values] = valueChoose(values);
+            fila.push(value);
+            }
+            tabla.push(fila);
+            }
+        return tabla;
+      }
+
+      function valueChoose(values) {
+        var indice = Math.round(Math.random() * (values.length - 1));
+        var value = values[indice];
+        values.splice(indice,1);
+        return [value, values];
+      }
+
+      function valuesGenerate(inicio, fin) {
+        var values = [];
+        for (var i = inicio; i <= fin; i++) {
+          values.push(i);
+        }
+        return values;
+        }
+    window.onload = tableCreate(5,5);
+    </script>
+    <script>
+      var numeros = document.querySelectorAll('td.active');
+      var fila0 = [];
+      var fila1 = [];
+      var fila2 = [];
+      var fila3 = [];
+      var fila4 = [];
+      numeros.forEach(function(element) {
+        element.onclick = function (e) {
+          e.preventDefault();
+          var celda = this.getAttribute('id');
+          var fila = parseInt(celda.substring(4,5));
+          switch (fila) {
+            case 0:
+            if (fila0.includes(celda)) {
+              fila0.splice(fila0.indexOf(celda),1);
+              this.setAttribute('style', '');
+              this.setAttribute('style', 'cursor: pointer;');
+            }else {
+              fila0.push(celda);
+              this.setAttribute('style', 'background: lightgreen; cursor: pointer;');
+              }
+              break;
+            case 1:
+            if (fila1.includes(celda)) {
+              fila1.splice(fila1.indexOf(celda),1);
+              this.setAttribute('style', '');
+              this.setAttribute('style', 'cursor: pointer;');
+            } else {
+              fila1.push(celda);
+              this.setAttribute('style', 'background: lightgreen; cursor: pointer;');
+              }
+              break;
+            case 2:
+            if (fila2.includes(celda)) {
+              fila2.splice(fila2.indexOf(celda),1);
+              this.setAttribute('style', '');
+              this.setAttribute('style', 'cursor: pointer;');
+              } else {
+                fila2.push(celda);
+                this.setAttribute('style', 'background: lightgreen; cursor: pointer;');
+                }
+                break;
+            case 3:
+            if (fila3.includes(celda)) {
+              fila3.splice(fila3.indexOf(celda),1);
+              this.setAttribute('style', '');
+              this.setAttribute('style', 'cursor: pointer;');
+              } else {
+                fila3.push(celda);
+                this.setAttribute('style', 'background: lightgreen; cursor: pointer;');
+                }
+                break;
+            case 4:
+            if (fila4.includes(celda)) {
+              fila3.splice(fila4.indexOf(celda),1);
+              this.setAttribute('style', '');
+              this.setAttribute('style', 'cursor: pointer;');
+              } else {
+                fila4.push(celda);
+                this.setAttribute('style', 'background: lightgreen; cursor: pointer;');
+                }
+                break;
+                default:
+                }
+
+        if(fila0.length == 5 || fila1.length == 5 || fila2.length == 5|| fila3.length == 5|| fila4.length == 5) {
+            //console.log('LINEA');
+            window.alert('ya ha ganado');
+        }
+        if(fila0.length == 5 && fila1.length == 5 && fila2.length == 5 && fila3.length == 5 && fila4.length == 5) {
+            //console.log('BINGO');
+            window.alert('BINGO! Ha ganado');   
+        }
+    }
+});
+    </script>
+    <script>
+      var ballot=[];
+      var letters=['b', 'i', 'n', 'g','o'];
+      for(var i=1;i<=99;i++){
+        ballot.push(i); 
+        }
+      for(var i=1;i<=99;i++){
+        letters.push('b');
+        letters.push('i');
+        letters.push('n');
+        letters.push('g');
+        letters.push('o');
+        }
+        ballot.sort(function() {return Math.random() - 0.5});
+        ballot.current = 0;
+        ballot.next = function(){
+          return this.current===this.length-1 ? null : this[++this.current];
+        }
+      
+        var aleat = Math.floor(Math.random() * letters.length);
+        
+          letters.current = 0;
+          letters.next = function(){
+          return letters[Math.floor(Math.random() * letters.length)];
+          }
+        ;
+      function mostrar() {
+        document.getElementById("MostrarNumeros").innerHTML = ballot[ballot.current];
+        document.getElementById("MostrarLetras").innerHTML = letters[aleat];
+        }
+        window.onload = mostrar;
+      function next() {
+        document.getElementById("MostrarNumeros").innerHTML = ballot.next();
+        document.getElementById("MostrarLetras").innerHTML = letters.next();
+      }
+    </script>
+		</body>
+</html>

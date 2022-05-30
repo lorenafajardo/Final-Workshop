@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    background-image: url("./img/fondo2.jpg");
+    width: 450px;
+    background-repeat: no-repeat;
+}
+main {
+    display: block;
+}
+p{
+    font-size: 12px;
+}
+table, td {
+    border: 3px solid black;
+    border-collapse : collapse;
+}
